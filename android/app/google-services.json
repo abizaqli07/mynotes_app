@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "620985484883",
+    "project_id": "flutter-tutorial-8ee30",
+    "storage_bucket": "flutter-tutorial-8ee30.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620985484883:android:413766c0c21c15c74fa8a6",
+        "android_client_info": {
+          "package_name": "com.tobi.mynotes_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620985484883-06tc10eqdmf58j62e00vmnaif8v5i3h3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuzPT07a0MLjq0iNI_jXsSd2ro-jVxeN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620985484883-06tc10eqdmf58j62e00vmnaif8v5i3h3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

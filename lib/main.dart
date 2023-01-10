@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
       home: const HomePage(),
       routes: {
         '/login/': (context) => const LoginView(),
-        '/register/': (context) => const RegisterView()
+        '/register/': (context) => const RegisterView(),
+        '/notes/':(context) => const NotesView()
       },
     );
   }
@@ -76,13 +77,14 @@ class _NotesViewState extends State<NotesView> {
             onSelected: (value) async {
               switch (value) {
                 case MenuAction.logout:
-                  final LogoutDialog = await showLogOutDialog(context);
-                  if (LogoutDialog) {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/login/',
-                      (route) => false,
-                    );
+                  final logoutDialog = await showLogOutDialog(context);
+                  if (logoutDialog) {
+                    await FirebaseAuth.instance.signOut().whenComplete(() => {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/login/',
+                            (route) => false,
+                          )
+                        });
                   }
                   break;
                 default:

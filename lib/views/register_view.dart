@@ -1,8 +1,7 @@
-import 'dart:developer' as dev show log;
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes_app/constants/routes.dart';
+import 'package:mynotes_app/utils/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -64,17 +63,37 @@ class _RegisterViewState extends State<RegisterView> {
                     email: email,
                     password: password,
                   );
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    loginRoute,
+                    (route) => false,
+                  );
                 } on FirebaseAuthException catch (e) {
                   if (e.code == "weak-password") {
-                    dev.log("Your password too weak");
+                    await showErrorDialog(
+                      context,
+                      "Your Password too Weak",
+                    );
                   } else if (e.code == 'email-already-in-use') {
-                    dev.log("This email has already used");
+                    await showErrorDialog(
+                      context,
+                      "The Email Address Already in Use",
+                    );
                   } else if (e.code == 'invalid-email') {
-                    dev.log("Invalid email");
+                    await showErrorDialog(
+                      context,
+                      "Invalid Email",
+                    );
                   } else {
-                    dev.log("Error occured");
-                    dev.log(e.toString());
+                    await showErrorDialog(
+                      context,
+                      "Error : ${e.code}",
+                    );
                   }
+                } catch (e) {
+                  await showErrorDialog(
+                    context,
+                    "Error : ${e.toString()}",
+                  );
                 }
               },
               child: const Text('Register'),

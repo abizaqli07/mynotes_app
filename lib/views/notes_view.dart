@@ -12,12 +12,11 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
-
   late final NotesService _notesService;
   String get userEmail => AuthService.firebase().currentUser!.email!;
 
   @override
-  void initState(){
+  void initState() {
     _notesService = NotesService();
     super.initState();
   }
@@ -61,7 +60,27 @@ class _NotesViewState extends State<NotesView> {
           ),
         ],
       ),
-      body: const Text("Hello Flutter"),
+      body: FutureBuilder(
+        future: _notesService.getOrCreateUser(email: userEmail),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              return StreamBuilder(
+                stream: _notesService.allNotes,
+                builder: ((context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const Text("Fetching all notes...");
+                    default:
+                      return const CircularProgressIndicator();
+                  }
+                }),
+              );
+            default:
+              return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }

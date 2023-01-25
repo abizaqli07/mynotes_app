@@ -11,7 +11,7 @@ class NotesService {
 
   List<DatabaseNote> _notes = [];
 
-static final NotesService _shared = NotesService._sharedInstance();
+  static final NotesService _shared = NotesService._sharedInstance();
   NotesService._sharedInstance() {
     _notesStreamController = StreamController<List<DatabaseNote>>.broadcast(
       onListen: () {
@@ -22,7 +22,6 @@ static final NotesService _shared = NotesService._sharedInstance();
   factory NotesService() => _shared;
 
   late final StreamController<List<DatabaseNote>> _notesStreamController;
-
 
   Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
 
@@ -251,10 +250,15 @@ static final NotesService _shared = NotesService._sharedInstance();
 
     await getNote(id: note.id);
 
-    final updatesCount = await db.update(noteTable, {
-      textColumn: text,
-      isSyncedWithCloudColumn: 0,
-    });
+    final updatesCount = await db.update(
+      noteTable,
+      {
+        textColumn: text,
+        isSyncedWithCloudColumn: 0,
+      },
+      where: 'id = ?',
+      whereArgs: [note.id],
+    );
 
     if (updatesCount == 0) {
       throw CouldNotUpdateNoteException();

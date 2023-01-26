@@ -15,3 +15,5 @@ class UserAlreadyExistException implements Exception {}
 class UserNotExistException implements Exception {}
 
 class NoteNotExistException implements Exception {}
+
+class UserShouldBeSetBeforeReadingAllNotes implements Exception {}
